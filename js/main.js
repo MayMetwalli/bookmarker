@@ -94,7 +94,7 @@ function saveToLocalStorage(){
 
 
 function checkInput() {
-    var nameRegex = /^.{3,}$/;
+    var nameRegex = /^(?!\s*$).{3,}$/; 
   if (nameRegex.test(siteName.value)) {
     siteName.classList.remove("is-invalid");
     siteName.classList.add("is-valid");
@@ -109,7 +109,7 @@ siteName.addEventListener("input", checkInput)
 
 
 function checkURL() {
-    var siteRegex =  /^www\.[a-zA-Z0-9]{2,}$/;
+    var siteRegex =  /^(?!\s*$)www\.[a-zA-Z0-9]{2,}$/;
   if (siteRegex.test(siteURL.value)) {
     siteURL.classList.remove("is-invalid");
     siteURL.classList.add("is-valid");
@@ -131,6 +131,13 @@ function closePopup(){
     
 }
 closeBtn.addEventListener("click", closePopup)
+
+document.addEventListener("keydown", function(e){
+    if (e.key == "Escape") {
+      closeModal();
+    }
+  });
+
 
 document.addEventListener('click', function(e){
     var clickedArea= e.target

@@ -25,11 +25,15 @@
         <div class="w-100 d-flex flex-column justify-content-center mb-3">
         <label for="siteName" class="fw-semibold mb-2"><i class="fa-solid fa-bookmark pe-2"></i>Site Name</label>
         <input type="text" placeholder="Bookmark Name" class="form-control" id="siteName"/>
+        <p class="text-danger d-none" id="duplicate-msg">This site name already exists.</p>
+        <p class="text-danger d-none" id="empty-name">Please enter a site name.</p>
       </div>
         <div class="w-100 d-flex flex-column justify-content-center mb-3">
         <label for="siteURL" class="fw-semibold mb-2"><i class="fa-solid fa-link pe-2"></i>Site URL</label>
         <input type="url" placeholder="Website URL" class="form-control" id="siteURL"/>
+        <p class="text-danger d-none" id="empty-url">Please enter a site URL.</p>
       </div>
+      <p class="text-danger d-none" id="empty-msg">Please enter bookmark details.</p>
           <div class="text-center">
               <button class="btn btn-danger px-5" id="submitBtn" type="button" >Submit</button>
           </div>          

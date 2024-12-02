@@ -4,12 +4,15 @@ var submitBtn = document.getElementById("submitBtn");
 var closeBtn = document.getElementById("close-btn");
 var popup = document.getElementById("popup");
 var popupContainer = document.getElementById("container");
+var duplicateMsg = document.getElementById("duplicate-msg")
+var emptyName = document.getElementById("empty-name")
+var emptyURL = document.getElementById("empty-url")
+var emptyMsg = document.getElementById("empty-msg")
+var allBookmarks=[]
 
 if(localStorage.getItem("allBookmarks")){  
     allBookmarks=JSON.parse(localStorage.getItem("allBookmarks"));
     displayBookmark(allBookmarks) 
-}else{
-    allBookmarks=[]
 }
 
 
@@ -20,15 +23,36 @@ for(i=0;i<allBookmarks.length;i++){
     ){
      return true
     }
-    return false
 }
+return false
 }
 
 function addNewBookmark(){
     var isDuplicate = checkForDuplicate();
-    checkForDuplicate()
-    console.log(isDuplicate)
+    
     if (!isDuplicate){
+
+        if(siteName.value === ''&& siteURL.value === ''){
+            emptyURL.classList.remove("d-none");
+            emptyName.classList.remove("d-none")
+            siteName.classList.add("is-invalid");
+            siteURL.classList.add("is-invalid");
+            popupContainer.classList.remove("d-none");
+            popup.classList.remove("d-none");
+            return;
+        }else if(siteName.value === ''){
+            emptyMsg.classList.remove("d-none");
+            siteName.classList.add("is-invalid");
+            popupContainer.classList.remove("d-none");
+            popup.classList.remove("d-none");
+            return;
+        }else if(siteURL.value === ''){
+            emptyMsg.classList.remove("d-none");
+            siteURL.classList.add("is-invalid");
+            popupContainer.classList.remove("d-none");
+            popup.classList.remove("d-none");
+            return;
+        }
 
         var bookmark= {
             name: siteName.value,
@@ -40,6 +64,9 @@ function addNewBookmark(){
         displayBookmark()
         saveToLocalStorage()
         
+    }else{
+        duplicateMsg.classList.remove("d-none");
+        siteName.classList.add("is-invalid");
     }
     
 
@@ -53,7 +80,7 @@ submitBtn.addEventListener('click',function(){
     }
     else{
         addNewBookmark()
-        checkForDuplicate()
+        displayBookmark()
     }
 })
 
@@ -109,7 +136,7 @@ siteName.addEventListener("input", checkInput)
 
 
 function checkURL() {
-    var siteRegex =  /^(?!\s*$)www\.[a-zA-Z0-9]{2,}$/;
+    var siteRegex = /^(https?:\/\/)?(w{3}\.)?\w+\.\w{2,}\/?(:\d{2,5})?(\/\w+)*$/;
   if (siteRegex.test(siteURL.value)) {
     siteURL.classList.remove("is-invalid");
     siteURL.classList.add("is-valid");
